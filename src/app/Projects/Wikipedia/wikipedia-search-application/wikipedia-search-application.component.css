@@ -1,0 +1,10 @@
+img {
+  width: 100%;
+  max-width: 200px;
+  padding: 20px;
+}
+
+.results {
+  max-height: calc(100vh - 236px);
+  margin-top: 236px;
+}

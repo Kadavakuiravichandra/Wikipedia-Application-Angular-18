@@ -1,0 +1,75 @@
+<div class="container">
+  <div class="row">
+    <div class="col-12">
+      <div
+        class="d-flex flex-column justify-content-center align-items-center min-vh-100"
+      >
+        <div
+          class="fixed-top bg-body-tertiary shadow d-flex flex-column justify-content-center align-items-center"
+        >
+          <!-- Image -->
+          <img
+            src="https://nkb-backend-otg-media-static.s3.ap-south-1.amazonaws.com/ccbp-dynamic-webapps/wiki-logo-img.png"
+            alt="wiki-logo-img"
+          />
+
+          <!-- Input -->
+          <div class="col-10 col-md-6 my-2">
+            <input
+              type="search"
+              placeholder="Type a keyword and press Enter to search"
+              class="form-control text-center"
+              [value]="userText()"
+              (input)="onChangeUserText($event)"
+              (keydown)="onSearch($event)"
+            />
+          </div>
+        </div>
+
+        <!-- Spinner -->
+        @if (urlState() === 'Pending') {
+        <mat-spinner></mat-spinner>
+        }
+
+        <!-- No Results -->
+        @if (results().length === 0 && urlState() === 'Success') {
+        <p class="text-warning text-center">No Results Found.</p>
+        }
+
+        <!-- Error Msg -->
+        @if(urlState() === 'Failure'){
+        <p class="text-danger text-center">
+          {{ errMsg() }}
+        </p>
+        }
+
+        <!-- Show results -->
+        <div class="results">
+          @if(results().length > 0 && urlState() === 'Success'){ @for (item of
+          results(); track $index) {
+          <mat-card appearance="outlined" class="w-100 my-2">
+            <mat-card-actions>
+              <a matButton href="{{ item.link }}" target="_blank">
+                {{ item.link }}
+              </a>
+            </mat-card-actions>
+            <mat-card-header>
+              <mat-card-title>
+                <p>
+                 <strong>
+                  {{ item.title }}
+                 </strong>
+                </p>
+              </mat-card-title>
+              <mat-card-subtitle>
+                <p>
+                  {{ item.description }}
+                </p>
+              </mat-card-subtitle>
+            </mat-card-header> </mat-card
+          >}}
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
